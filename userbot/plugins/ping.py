@@ -2,9 +2,10 @@ import asyncio
 from datetime import datetime
 
 from ..core.managers import edit_or_reply
-from . import catub, hmention
+from . import catub
 
 plugin_category = "tools"
+
 
 def get_readable_time(seconds: int) -> str:
     count = 0
@@ -52,8 +53,9 @@ async def _(event):
     start = datetime.now()
     end = datetime.now()
     ms = (end - start).microseconds / 1000
-    await eor(event,
-        f"**█▀█ █▀█ █▄░█ █▀▀ █ \n█▀▀ █▄█ █░▀█ █▄█ ▄**\n\n✥ **✪ Tɪᴍᴇ Tᴀᴋᴇɴ:** `{ms}` ms \n✥ **✪ Mᴀsᴛᴇʀ:** `{ALIVE_NAME}` \n✥ **✪ Assɪsᴛᴀɴᴛ:** __{TG_BOT_USER_NAME}__"
+    await eor(
+        event,
+        f"**█▀█ █▀█ █▄░█ █▀▀ █ \n█▀▀ █▄█ █░▀█ █▄█ ▄**\n\n✥ **✪ Tɪᴍᴇ Tᴀᴋᴇɴ:** `{ms}` ms \n✥ **✪ Mᴀsᴛᴇʀ:** `{ALIVE_NAME}` \n✥ **✪ Assɪsᴛᴀɴᴛ:** __{TG_BOT_USER_NAME}__",
     )
 
 
@@ -105,7 +107,6 @@ async def _(event):
         f"‎‎‎‎‎‎‎‎‎⬛⬛⬛⬛⬛⬛⬛⬛⬛\n⬛📶📶📶📶📶📶📶⬛\n⬛⬛⬛⬛📶⬛⬛📶⬛\n⬛⬛⬛⬛📶⬛⬛📶⬛\n⬛⬛⬛⬛📶⬛⬛📶⬛\n⬛⬛⬛⬛⬛📶📶⬛⬛\n⬛⬛⬛⬛⬛⬛⬛⬛⬛\n⬛⬛📶📶📶📶📶⬛⬛\n⬛📶⬛⬛⬛⬛⬛📶⬛\n⬛📶⬛⬛⬛⬛⬛📶⬛\n⬛📶⬛⬛⬛⬛⬛📶⬛\n⬛⬛📶📶📶📶📶⬛⬛\n⬛⬛⬛⬛⬛⬛⬛⬛⬛\n⬛📶📶📶📶📶📶📶⬛\n⬛⬛⬛⬛⬛⬛📶⬛⬛\n⬛⬛⬛⬛⬛📶⬛⬛⬛\n⬛⬛⬛⬛📶⬛⬛⬛⬛\n⬛📶📶📶📶📶📶📶⬛\n⬛⬛⬛⬛⬛⬛⬛⬛⬛\n⬛⬛📶📶📶📶📶⬛⬛\n⬛📶⬛⬛⬛⬛⬛📶⬛\n⬛📶⬛⬛⬛⬛⬛📶⬛\n⬛📶⬛📶⬛⬛⬛📶⬛\n⬛⬛📶📶⬛⬛📶⬛⬛\n⬛⬛⬛⬛⬛⬛⬛⬛⬛\n⬛📶⬛📶📶📶📶📶⬛\n⬛⬛⬛⬛⬛⬛⬛⬛⬛ \n‎‎‎‎‎‎‎‎‎ \n \n My 🇵 🇮 🇳 🇬  Is : {ms} ms"
     )
 
-  
 
 @catub.cat_cmd(
     pattern="ting$",
