@@ -6,6 +6,33 @@ from . import catub, hmention
 
 plugin_category = "tools"
 
+def get_readable_time(seconds: int) -> str:
+    count = 0
+    ping_time = ""
+    time_list = []
+    time_suffix_list = ["s", "m", "h", "days"]
+
+    while count < 4:
+        count += 1
+        if count < 3:
+            remainder, result = divmod(seconds, 60)
+        else:
+            remainder, result = divmod(seconds, 24)
+        if seconds == 0 and remainder == 0:
+            break
+        time_list.append(int(result))
+        seconds = int(remainder)
+
+    for x in range(len(time_list)):
+        time_list[x] = str(time_list[x]) + time_suffix_list[x]
+    if len(time_list) == 4:
+        ping_time += time_list.pop() + ", "
+
+    time_list.reverse()
+    ping_time += ":".join(time_list)
+
+    return ping_time
+
 
 @catub.cat_cmd(
     pattern="ping( -a|$)",
@@ -18,26 +45,16 @@ plugin_category = "tools"
 )
 async def _(event):
     "To check ping"
-    flag = event.pattern_match.group(1)
+    if event.fwd_from:
+        return
+    ALIVE_NAME = Config.ALIVE_NAME
+    TG_BOT_USER_NAME = Config.TG_BOT_USERNAME
     start = datetime.now()
-    if flag == " -a":
-        catevent = await edit_or_reply(event, "`!....`")
-        await asyncio.sleep(0.3)
-        await catevent.edit("`..!..`")
-        await asyncio.sleep(0.3)
-        await catevent.edit("`....!`")
-        end = datetime.now()
-        tms = (end - start).microseconds / 1000
-        ms = round((tms - 0.6) / 3, 3)
-        await catevent.edit(f"**☞ Average Pong!**\n➥ {ms} ms")
-    else:
-        catevent = await edit_or_reply(event, "<b><i>☞ Pong!</b></i>", "html")
-        end = datetime.now()
-        ms = (end - start).microseconds / 1000
-        await catevent.edit(
-            f"<b><i>☞ Pong</b></i>\n➥ {ms} <b><i>ms\n➥ Bot of {hmention}</b></i>",
-            parse_mode="html",
-        )
+    end = datetime.now()
+    ms = (end - start).microseconds / 1000
+    await eor(event,
+        f"**█▀█ █▀█ █▄░█ █▀▀ █ \n█▀▀ █▄█ █░▀█ █▄█ ▄**\n\n✥ **✪ Tɪᴍᴇ Tᴀᴋᴇɴ:** `{ms}` ms \n✥ **✪ Mᴀsᴛᴇʀ:** `{ALIVE_NAME}` \n✥ **✪ Assɪsᴛᴀɴᴛ:** __{TG_BOT_USER_NAME}__"
+    )
 
 
 @catub.cat_cmd(
@@ -50,7 +67,7 @@ async def _(event):
     start = datetime.now()
     animation_interval = 0.3
     animation_ttl = range(26)
-    event = await edit_or_reply(event, "ping....")
+    event = await edit_or_reply(event, "Ping....")
     animation_chars = [
         "⬛⬛⬛⬛⬛⬛⬛⬛⬛",
         "⬛⬛⬛⬛⬛⬛⬛⬛⬛ \n⬛‎📶‎📶‎📶‎📶‎📶‎📶‎📶⬛",
@@ -86,4 +103,26 @@ async def _(event):
     ms = (end - start).microseconds / 1000
     await event.edit(
         f"‎‎‎‎‎‎‎‎‎⬛⬛⬛⬛⬛⬛⬛⬛⬛\n⬛📶📶📶📶📶📶📶⬛\n⬛⬛⬛⬛📶⬛⬛📶⬛\n⬛⬛⬛⬛📶⬛⬛📶⬛\n⬛⬛⬛⬛📶⬛⬛📶⬛\n⬛⬛⬛⬛⬛📶📶⬛⬛\n⬛⬛⬛⬛⬛⬛⬛⬛⬛\n⬛⬛📶📶📶📶📶⬛⬛\n⬛📶⬛⬛⬛⬛⬛📶⬛\n⬛📶⬛⬛⬛⬛⬛📶⬛\n⬛📶⬛⬛⬛⬛⬛📶⬛\n⬛⬛📶📶📶📶📶⬛⬛\n⬛⬛⬛⬛⬛⬛⬛⬛⬛\n⬛📶📶📶📶📶📶📶⬛\n⬛⬛⬛⬛⬛⬛📶⬛⬛\n⬛⬛⬛⬛⬛📶⬛⬛⬛\n⬛⬛⬛⬛📶⬛⬛⬛⬛\n⬛📶📶📶📶📶📶📶⬛\n⬛⬛⬛⬛⬛⬛⬛⬛⬛\n⬛⬛📶📶📶📶📶⬛⬛\n⬛📶⬛⬛⬛⬛⬛📶⬛\n⬛📶⬛⬛⬛⬛⬛📶⬛\n⬛📶⬛📶⬛⬛⬛📶⬛\n⬛⬛📶📶⬛⬛📶⬛⬛\n⬛⬛⬛⬛⬛⬛⬛⬛⬛\n⬛📶⬛📶📶📶📶📶⬛\n⬛⬛⬛⬛⬛⬛⬛⬛⬛ \n‎‎‎‎‎‎‎‎‎ \n \n My 🇵 🇮 🇳 🇬  Is : {ms} ms"
+    )
+
+  
+
+@catub.cat_cmd(
+    pattern="ting$",
+    command=("ting", plugin_category),
+    info={"header": "Shows the server ping with extra animation", "usage": "{tr}ting"},
+)
+async def _(event):
+    "To check ping with animation"
+    if event.fwd_from:
+        return
+    start = datetime.now()
+    event = await edit_or_reply(event, "<i><b>☞ Tong!</b></i>", "html")
+    end = datetime.now()
+    ALIVE_NAME = Config.ALIVE_NAME
+    TG_BOT_USER_NAME = Config.TG_BOT_USERNAME
+    ms = (end - start).microseconds / 1000
+    await event.edit(
+        f"<i><b>☞ Tong</b></i>\n➥ {ms} ms\n➥ <i><b>Bot of: {ALIVE_NAME}</b></i>\n➥ <i><b>Assistant: {TG_BOT_USER_NAME}</b></i>",
+        parse_mode="html",
     )
